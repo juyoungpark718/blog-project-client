@@ -1,5 +1,5 @@
 const theme = {
-  bgColor: "#efefef"
+  bgColor: "#F1EDEB"
 };
 
 export default theme;
