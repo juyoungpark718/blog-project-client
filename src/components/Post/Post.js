@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Card from "../Card/Card";
+import { getPostList } from "../../axios/axios";
 
 const Container = styled.div`
   width: 100%;
@@ -48,6 +49,18 @@ const LatestHeader = styled.div`
 `;
 
 export default class Post extends Component {
+  state = {
+    postList: []
+  };
+  componentDidMount() {
+    this._getPostList();
+  }
+  _getPostList = async () => {
+    const { data } = await getPostList();
+    this.setState({
+      postList: data
+    });
+  };
   render() {
     return (
       <Container>
@@ -63,9 +76,14 @@ export default class Post extends Component {
           <LatestHeader>
             <span>Latest Post !!</span>
           </LatestHeader>
-          <Card />
-          <Card />
-          <Card />
+          {this.state.postList.map(post => (
+            <Card
+              key={post.id}
+              createdAt={post.createdAt}
+              title={post.title}
+              rawBody={post.rawBody}
+            />
+          ))}
         </LatestPost>
       </Container>
     );

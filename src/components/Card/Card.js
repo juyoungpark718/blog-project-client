@@ -26,7 +26,7 @@ const CardImg = styled.div`
   flex: 1;
   background-image: ${props => `url(${props.image})`};
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
 `;
 
 const CardPost = styled.div`
@@ -67,15 +67,19 @@ export default function Card(props) {
     <Container featured={props.featured}>
       {props.featured ? <CardHeader>Featured</CardHeader> : null}
       <CardBody>
-        <CardImg image={props.image} />
+        <CardImg
+          image={
+            props.image
+              ? props.image
+              : "https://images.unsplash.com/photo-1565300667498-2843c56b4603?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1271&q=80"
+          }
+        />
         <CardPost>
           <PostDate>
-            <span>2020 2월 8일 토요일</span>
+            <span>{props.createdAt}</span>
           </PostDate>
-          <PostHeader featured={props.featured}>
-            Featured Card입니다.
-          </PostHeader>
-          <PostSummary>Featured Card Post Summary입니다.</PostSummary>
+          <PostHeader featured={props.featured}>{props.title}</PostHeader>
+          <PostSummary>{props.rawBody}</PostSummary>
         </CardPost>
       </CardBody>
     </Container>

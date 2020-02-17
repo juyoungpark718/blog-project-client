@@ -64,18 +64,18 @@ export default class Postform extends Component {
 
   _handleSubmit = async e => {
     e.preventDefault();
-    console.log("clicked");
-    const { title, body, rawBody } = this.state;
+    const { title, body } = this.state;
+    let { rawBody } = this.state;
+    rawBody = rawBody.replace(/\n/g, " ");
     if (title === "" || body === "") {
       alert("값을 입력해주세요.");
     } else {
-      const result = await postCreate(title, body, rawBody);
+      await postCreate(title, body, rawBody);
       this.setState({
         title: "",
         body: "",
         rawBody: ""
       });
-      console.log(result);
     }
   };
   render() {
@@ -92,11 +92,16 @@ export default class Postform extends Component {
           <CKEditor
             data={this.state.body}
             editor={ClassicEditor}
+            config={{
+              simpleUpload: {
+                uploadUrl: "http://localhost:4000/post/upload"
+              }
+            }}
+            onInit={editor => {}}
             onChange={(event, editor) => {
               const body = editor.getData();
               const rawBody = editor.ui.element.innerText.substring(11);
               this._handleInput(body, rawBody);
-              console.log(editor);
             }}
           />
         </Form>

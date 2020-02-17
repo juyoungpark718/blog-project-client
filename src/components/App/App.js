@@ -25,7 +25,6 @@ function App() {
         ) : (
           <ShowBtn
             onClick={() => {
-              console.log("hi");
               setValue(!isPostform);
             }}
           >
